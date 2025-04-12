@@ -4,8 +4,7 @@ from os import system
 # LinkedIn: https://www.linkedin.com/in/mateusmagalhaes/
 
 # Título do projeto
-titulo = """
-_________________________________________
+titulo = """_________________________________________
  CALCULADORA DE CONVERSÃO DE TEMPERATURA
 _________________________________________\n"""
 
