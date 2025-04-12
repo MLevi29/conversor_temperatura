@@ -1,4 +1,4 @@
-# Conversor de teperatura
+# Conversor de temperatura
 
 ## Descrição: 
 O presente arquivo apresenta um projeto particular de conversor de temperatura feito em python utilizando estrutura OOP e o framework Custom Tkinter para GUI.
@@ -24,5 +24,5 @@ Atualmente, estou tentando implementar uma interface utilizando OOP. Para isso, 
 ## Referência
 
 Pense em Python - Allen B. Downey  
-Curso de Física básica, Vol 2 - Moysés Nussenzveig  
+Curso de Física Básica, Vol 2 - Moysés Nussenzveig  
 [Site do CustomTkinter](https://customtkinter.tomschimansky.com/)  
