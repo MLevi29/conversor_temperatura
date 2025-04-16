@@ -21,20 +21,22 @@ class App(ctk.CTk):
         self.temperatura = ctk.CTkLabel(self, text='Temperatura:')
         self.temperatura.pack(pady=10)
 
-        self.valor1 = ctk.StringVar(value=0)
-        self.temp1_valor = ctk.CTkEntry(self, textvariable=self.valor1)
+        self.texto1 = ctk.StringVar(value=0)
+        self.temp1_valor = ctk.CTkEntry(self, textvariable=self.texto1)
+        self.temp1_valor.bind("<KeyRelease>", self.converter)
         self.temp1_valor.pack()
-
+        
         self.temp1 = ctk.CTkOptionMenu(self,
-                        values=["Graus Celsius (°C)", "Graus Fahrenheit (°F)", "Kelvin (K)"])
+                        values=["Graus Celsius (°C)", "Graus Fahrenheit (°F)", "Kelvin (K)"], command=self.converter)
         self.temp1.pack()
 
+        # Igual
         self.igual = ctk.CTkLabel(self, text='=')
         self.igual.pack()
 
         # Temperatura de saída
-        self.valor2 = ctk.StringVar(value=0)
-        self.temp2_valor = ctk.CTkEntry(self, textvariable=self.valor1)
+        self.texto2 = ctk.StringVar(value=0)
+        self.temp2_valor = ctk.CTkEntry(self, textvariable=self.texto2)
         self.temp2_valor.pack(pady=10)
 
         self.temp2 = ctk.CTkOptionMenu(self,
@@ -44,48 +46,38 @@ class App(ctk.CTk):
         # Botão para sair
         self.sair = ctk.CTkButton(self, text='Sair', command=self.quit)
         self.sair.pack(pady=5)
-        
-
-    def conversao(self):
-        temps = ["Graus Celsius (°C)", "Graus Fahrenheit (°F)", "Kelvin (K)"]
-        i_temp = (temps.index(self.temp1.get()), temps.index(self.temp2.get()))
-
-        match i_temp:
-            # get retorna uma string, fazer tratamento
-            # quando não coloco valor na entrada, ele considera uma string '' que não pode ser transformada em float
-            case (0,0):
-                self.temp2_valor.configure(placeholder_text=self.temp1_valor.get())      
-
-            case (0,1):
-                valor = float(self.temp1_valor.get())*1.8+32
-                self.temp2_valor.configure(placeholder_text=valor)
-
-            case (0,2):
-                valor = float(self.temp1_valor.get()) + 273
-                self.temp2_valor.configure(placeholder_text=valor)
-
-            case (1,0):
-                valor = (float(self.temp1_valor.get())-32)/1.8
-                self.temp2_valor.configure(placeholder_text=valor)
-
-            case (1,1):
-                self.temp2_valor.configure(placeholder_text=self.temp1_valor.get()) 
-
-            case (1,2):
-                valor = ((float(self.temp1_valor.get())-32)*5/9)+273
-                self.temp2_valor.configure(placeholder_text=valor)
-
-            case (2,0):
-                valor = float(self.temp1_valor.get())-273
-                self.temp2_valor.configure(placeholder_text=valor)
-
-            case (2,1):
-                valor = (float(self.temp1_valor.get())-273)*1.8+32
-                self.temp2_valor.configure(placeholder_text=valor)
-
-            case (2,2):
-                self.temp2_valor.configure(placeholder_text=self.temp1_valor.get())
             
+    def converter(self, event):
+        if self.temp1_valor.get()=="":
+            self.texto1.set(0)
+
+        else:
+            entrada = float(self.temp1_valor.get())
+
+            lista = ["Graus Celsius (°C)", "Graus Fahrenheit (°F)", "Kelvin (K)"]
+            t1 = lista.index(self.temp1.get())
+            t2 = lista.index(self.temp2.get())
+
+            if t1==t2:
+                self.texto2.set(entrada)
+
+            else:
+                if t1==0:
+                    if t2 == 1:
+                        self.texto2.set(entrada*1.8+32)
+                    else:
+                        self.texto2.set(entrada+273)
+
+                elif t1 == 1:
+                    if t2 == 0:
+                        self.texto2.set((entrada-32)/1.8)
+                    else:
+                        self.texto2.set(((entrada-32)*5/9)+273)
+                elif t1==2:
+                    if t2==0:
+                        self.texto2.set(entrada-273)
+                    else:
+                        self.texto2.set((entrada-273)*1.8+32)
 
 
 conversor = App()
